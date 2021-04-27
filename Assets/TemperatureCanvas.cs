@@ -3,55 +3,50 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent (typeof(CanvasScaler ), typeof(GraphicRaycaster))]
+
 public class TemperatureCanvas : MonoBehaviour
 	{
-		public Camera camera;
+		public Camera cam;
 
 		private Canvas canvas;
+		private Text text;
 
  		void Start	()
     		{
         		// Get canvas from the GameObject.
-        Canvas canvas;
-        canvas = canvasGO.GetComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        		canvas = GetComponent <Canvas> ();
+        		canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
-        // Create the Text GameObject.
-        GameObject textGO = new GameObject();
-        textGO.transform.parent = canvasGO.transform;
-        textGO.AddComponent<Text>();
+        		// Create the Text GameObject.
+        		GameObject t = new GameObject ();
+        		t.transform.parent = canvas.transform;
+				text = t.AddComponent <Text> ();
+				//t.AddComponent <CanvasRenderer> ();
 
-        // Set Text component properties.
-        text = textGO.GetComponent<Text>();
-        text.font = arial;
-        text.text = "Press space key";
-        text.fontSize = 48;
-        text.alignment = TextAnchor.MiddleCenter;
+        		// Set Text component properties.
+        		//text = t.GetComponent<Text>();
 
-        // Provide Text position and size using RectTransform.
-        RectTransform rectTransform;
-        rectTransform = text.GetComponent<RectTransform>();
-        rectTransform.localPosition = new Vector3(0, 0, 0);
-        rectTransform.sizeDelta = new Vector2(600, 200);
-    }
+				Font arial = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 
-    void Update()
-    {
-        // Press the space key to change the Text message.
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (textChanged != UpDown.Down)
-            {
-                text.text = "Text changed";
-                textChanged = UpDown.Down;
-            }
-            else
-            {
-                text.text = "Text changed back";
-                textChanged = UpDown.Up;
-            }
-        }
-    }
-}
+				text.color = Color.black;
+        		text.font = arial;
+        		text.text = "Press space key";
+        		text.fontSize = 28;
+        		text.alignment = TextAnchor.MiddleCenter;
+
+        		// Provide Text position and size using RectTransform.
+        		RectTransform rectTransform;
+        		rectTransform = text.GetComponent <RectTransform> ();
+        		rectTransform.localPosition = new Vector3 (00, 00, 0);
+        		//rectTransform.sizeDelta = new Vector2 (150, 80);
+    		}
+
+    	void Update()
+    		{
+				text.text = "Press space key";
+       
+    		}
 	}
+	
 
