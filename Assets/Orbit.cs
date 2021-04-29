@@ -35,44 +35,16 @@ public class Orbit : MonoBehaviour
         				cam.transform.Translate (0.01f * delta * moveSpeed, 0, 0, Space.Self);
     				}
 
-			//	FixedUpdate1 ();
+				/** get camera center for determining which object looks camera at */
+				Vector3 center = cam.transform.position;
+
+				RaycastHit hit;
+
+        		/** does the ray intersect any objects excluding the player layer */
+        		if (Physics.Raycast (center, transform.TransformDirection (Vector3.forward), out hit))
+					{
+        				Debug.Log (" --- " + hit.transform.gameObject.name + " " + hit.transform.gameObject.tag);
+						hit.transform.gameObject.SendMessage ("info", 0, SendMessageOptions.DontRequireReceiver);
+					}
     		}
-
-		void FixedUpdate1 ()
-    		{
-        		// Bit shift the index of the layer (8) to get a bit mask
-//        		int layerMask = 1 << 8;
-
-        		// This would cast rays only against colliders in layer 8.
-        		// But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
-  //      		layerMask = ~layerMask;
-
-				//RectTransform r = GetComponent <RectTransform> ();
-
-  				Vector3 center = cam.transform.position; //ScreenToWorldPoint (new Vector3 (r.rect.width / 2, 
-												//					  r.rect.height / 2,
-												//		 			  cam.nearClipPlane));
-
-				//Debug.Log ("center " + center + " " + r.rect.width + " " + r.rect.height);
-				Debug.DrawRay (center, transform.TransformDirection(Vector3.forward) * 1000, 
-									   Color.green);
-
-        		RaycastHit hit;
-        		// Does the ray intersect any objects excluding the player layer
-        		if (Physics.Raycast (center, transform.TransformDirection(Vector3.forward), 
-									 out hit))
-        			{
-            			Debug.DrawRay (center, 
-									   transform.TransformDirection(Vector3.forward) * hit.distance, 
-									   Color.yellow);
-						var obj = hit.transform.gameObject;
-						Debug.Log("Did Hit" + hit.distance + " " + obj);
-        			}
-        		else
-        			{
-            			Debug.DrawRay (center, 
-									   transform.TransformDirection(Vector3.forward) * 1000, Color.red);
-            			Debug.Log("Did not Hit");
-        			}
-			}
 	}
