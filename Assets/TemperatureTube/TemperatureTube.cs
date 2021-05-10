@@ -4,6 +4,52 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+public class Parameters
+	{
+		public Parameters (String source_substance, double source_flow_rate, double source_in_temperature,
+					       double source_out_temperature, double source_ambient)
+			{
+ 				substance = source_substance;
+
+				flow_rate = source_flow_rate;
+				in_temperature = source_in_temperature;
+				out_temperature = source_out_temperature;
+				ambient = source_ambient;
+			}
+
+		public String substance;
+		public double flow_rate, in_temperature, out_temperature, ambient;
+	}
+
+public class Geometry
+	{
+		public Geometry (String source_material, double source_length, double source_radius_inner,
+				  		 double source_radius_outer)
+			{
+				material = source_material;
+	
+				length = source_length;
+				radius_inner = source_radius_inner;
+				radius_outer = source_radius_outer;
+				wall_thick = source_radius_outer - source_radius_inner;
+			}
+
+		public String material;
+		public double length, radius_inner, radius_outer, wall_thick;
+	} 
+
+public class Info
+	{
+		public Info (Geometry source_geometry, Parameters source_parameters)
+			{
+				geometry = source_geometry;
+				parameters = source_parameters;
+			}
+
+		public Geometry geometry;
+		public Parameters parameters;
+	}
+
 [ExecuteAlways, RequireComponent (typeof(MeshFilter), typeof(MeshRenderer), typeof(CapsuleCollider))]
 
 public class TemperatureTube : MonoBehaviour
@@ -315,17 +361,12 @@ public class TemperatureTube : MonoBehaviour
 
 	public void info()
 		{
-		String text = "length:\t\t" + _length 
-						+ "\n"
-						+ "outer radius:\t\t" + _outer_radius 
-						+ "\n"
-						+ "inner_radiuss:\t\t" + _inner_radius 
-						+ "\n"
-						+ "wall thickness:\t\t" + (_outer_radius - _inner_radius) 
-						+ "\n"
-						+ "material:\t\tsteel";
-
-		canvas.SendMessage("show", text);
+		canvas.SendMessage ("show", 
+						    new Info (new Geometry ("Steel",  
+												   _length, _inner_radius, _outer_radius),
+									  new Parameters ("Water", flow (), temperature (),
+													 _cells [_cells.Count - 1].substance ().temperature (),
+													 ambient ())));
 		}
 	
 	private void OnDrawGizmos()
