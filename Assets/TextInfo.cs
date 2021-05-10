@@ -4,27 +4,53 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-[RequireComponent (typeof(CanvasScaler ), typeof(GraphicRaycaster))]
+[ RequireComponent (typeof (Image), typeof (TextMeshProUGUI)) ]
 
-public class TemperatureCanvas : MonoBehaviour
+public class TextInfo : MonoBehaviour
 	{
-		public Camera cam;
+		private Image image;
+		private TextMeshProUGUI info;
 
-		private Canvas canvas;
-		private Vector2 canvasize;
-
-		private TextMeshProUGUI geometry, parameters;
-
-	private void /*TextMeshProUGUI*/create_textmesh (String name, int x, int y)
+		void Start ()
 			{
-				GameObject obj = new GameObject ();
+				image = GetComponent <Image> ();//	GameObject obj = new GameObject ();
+				image.color = new Vector4 (0.0f, 0.0f, 1.0f, 0.05f);// Color.yellow;
 
-				obj.name = name;
-        		obj.transform.parent = canvas.transform;
+				info = GetComponent <TextMeshProUGUI> ();
+				/** Make sure the Anton SDF exists before calling this */
+				info.font = Resources.Load ("Font/Electronic Highway Sign SDF", typeof (TMP_FontAsset)) 
+								as TMP_FontAsset;
+              
+				info.fontSize = 16; //(int) (16 * Math.Min (canvas.pixelRect.width, 
+			//												canvas.pixelRect.height) / 440.0f);                
+				info.alignment = TextAlignmentOptions.Left;
+       			info.extraPadding = true;
+
+			//	Vector2 size = new Vector2 (Math.Abs (x) * b, Math.Abs (y) * textmesh.fontSize);
+
+				/** provide text position and size using RectTransform */
+        	//	RectTransform transform;
+
+			//	transform = textmesh.GetComponent <RectTransform> ();
+        		
+				/** set text position */
+			//	transform.localPosition = center;
+        		/** set text box dimensions */
+				//	transform.sizeDelta = size;
+				
+			//	transform = img.GetComponent <RectTransform> ();
+				/** set text position */
+				
+			//	transform.localPosition = center;
+			    /** set text box dimensions */
+			//	transform.sizeDelta = size + new Vector2 (40, 40);
+			
+
+			//	obj.name = name;
+        	//	obj.transform.parent = canvas.transform;
 
 				/** set text component properties */
-				//Type name = Type.GetType ("TextInfo");
-				TextInfo textinfo = obj.AddComponent (Type.GetType ("TextInfo")) as TextInfo;
+			//	TextMeshProUGUI textmesh = obj.AddComponent <TextMeshProUGUI> ();
                 
 				/** Make sure the Anton SDF exists before calling this */
 			//	textmesh.font = Resources.Load ("Font/Electronic Highway Sign SDF", typeof (TMP_FontAsset)) 
@@ -69,56 +95,6 @@ public class TemperatureCanvas : MonoBehaviour
 			//	return textmesh;
 			}
 	
-		//public Color c1 = Color.red;
-    	//public Color c2 = Color.white;
-    	//Vector3 topPoint;
-    	//Vector3 bottomPoint;
-
-    // Start is called before the first frame update
-    	void Start()
-    		{
- 				/** get canvas from the GameObject */
-        	//	canvas = GetComponent <Canvas> ();
-        	//	canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-
-			//	canvasize = new Vector2 (canvas.pixelRect.width, canvas.pixelRect.height);
-					
-			//	geometry = create_textmesh ("TubeGeometryInfo", -27, 5);
-
-				//obj.transform.parent = canvas.transform;
-			
-				/*Vector3 top = new Vector3 (canvas.pixelRect.width / 2, canvas.pixelRect.height, 0);
-        		Vector3 bottom = new Vector3 (canvas.pixelRect.width / 2, 0, 0);
-
-				GameObject obj = new GameObject ();
-				obj.transform.parent = canvas.transform;
-		
-       			Image img = obj.AddComponent <Image> ();
-				img.color = Color.red;
-
-				RectTransform t = img.GetComponent <RectTransform> ();
-				
-				t.anchoredPosition =  new Vector2 (0, 0); //canvas.pixelRect.height / 2.0f);
-				t.sizeDelta = new Vector2 (canvas.pixelRect.height, 2f);
-				t.localEulerAngles = new Vector3 (0, 0, 90f);
-
-				GameObject obj1 = new GameObject ();
-				obj1.transform.parent = canvas.transform;
-		
-       			Image img1 = obj1.AddComponent <Image> ();
-				img1.color = Color.red;
-
-				RectTransform t1 = img1.GetComponent <RectTransform> ();
-				
-				t1.anchoredPosition =  new Vector2 (0, 0); //canvas.pixelRect.height / 2.0f);
-				t1.sizeDelta = new Vector2 (canvas.pixelRect.width, 2f);
-
-			//	geometry = textmesh (-27, 5);
-				//float b = (4.0f * canvas.pixelRect.width / 10.0f) / geometry.textInfo.characterInfo [0].textElement.glyph.metrics.width;
-//Debug.Log ("b : " + b);
-				//parameters = textmesh (30, -5);*/
-    		}
-
 		void Update ()
 			{
 			//	Vector2 size = new Vector2 (canvas.pixelRect.width, canvas.pixelRect.height);
