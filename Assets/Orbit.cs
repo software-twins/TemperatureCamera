@@ -43,7 +43,7 @@ public class Orbit : MonoBehaviour
         		/** does the ray intersect any objects excluding the player layer */
         		if (Physics.Raycast (center, transform.TransformDirection (Vector3.forward), out hit))
 					{
-        				Debug.Log (" --- " + hit.transform.gameObject.name + " " + hit.transform.gameObject.tag);
+        		//		Debug.Log (" --- " + hit.transform.gameObject.name + " " + hit.transform.gameObject.tag);
 						hit.transform.gameObject.SendMessage ("info", 0, SendMessageOptions.DontRequireReceiver);
 					}
     		}

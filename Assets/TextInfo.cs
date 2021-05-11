@@ -6,7 +6,15 @@ using TMPro;
 
 [ RequireComponent (typeof (Image), typeof (TextMeshProUGUI)) ]
 
-public class TextInfo : MonoBehaviour
+public class t1Update : MonoBehaviour
+{
+	virtual public void Update1 ()
+{
+Debug.Log ("in update textInfo----214");
+}
+}
+
+public class TextInfo : t1Update
 	{
 		private Image image;
 		private TextMeshProUGUI info;
@@ -95,7 +103,7 @@ public class TextInfo : MonoBehaviour
 			//	return textmesh;
 			}
 	
-		void Update ()
+	override  public void Update1 ()
 			{
 			//	Vector2 size = new Vector2 (canvas.pixelRect.width, canvas.pixelRect.height);
 
@@ -116,6 +124,7 @@ public class TextInfo : MonoBehaviour
 		
 				//Vector2 size = new Vector2 (27 * 12, 5 * 16);
 				//textransform.sizeDelta = size;
+Debug.Log ("in update textInfo");
 			}
 
 		public void show (Info info)

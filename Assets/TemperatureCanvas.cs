@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-[RequireComponent (typeof(CanvasScaler ), typeof(GraphicRaycaster))]
+[ RequireComponent (typeof (CanvasScaler ), typeof (GraphicRaycaster)) ]
 
 public class TemperatureCanvas : MonoBehaviour
 	{
@@ -14,10 +14,13 @@ public class TemperatureCanvas : MonoBehaviour
 		private Vector2 canvasize;
 
 		private TextMeshProUGUI geometry, parameters;
+		private TextInfo geometryinfo;
 
-	private void /*TextMeshProUGUI*/create_textmesh (String name, int x, int y)
+		GameObject obj;
+
+		private void /*TextMeshProUGUI*/create_textmesh (String name, int x, int y)
 			{
-				GameObject obj = new GameObject ();
+				obj = new GameObject ();
 
 				obj.name = name;
         		obj.transform.parent = canvas.transform;
@@ -78,8 +81,17 @@ public class TemperatureCanvas : MonoBehaviour
     	void Start()
     		{
  				/** get canvas from the GameObject */
-        	//	canvas = GetComponent <Canvas> ();
-        	//	canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        		canvas = GetComponent <Canvas> ();
+				canvasize = new Vector2 (canvas.pixelRect.width, canvas.pixelRect.height);
+			
+				obj = new GameObject ();
+				obj.transform.parent = canvas.transform;
+
+				/** set text component properties */
+				//Type name = Type.GetType ("TextInfo");
+				TextInfo geometryinfo = obj.AddComponent (Type.GetType ("TextInfo")) as TextInfo;
+        	
+				//	canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
 			//	canvasize = new Vector2 (canvas.pixelRect.width, canvas.pixelRect.height);
 					
@@ -121,13 +133,15 @@ public class TemperatureCanvas : MonoBehaviour
 
 		void Update ()
 			{
-			//	Vector2 size = new Vector2 (canvas.pixelRect.width, canvas.pixelRect.height);
+				Vector2 size = new Vector2 (canvas.pixelRect.width, canvas.pixelRect.height);
 
-			//	if ( canvasize != size )
-			//		{
-			//			canvasize = size;
-			//			Debug.Log ("resize on");
-			//		}
+				if ( canvasize != size )
+					{
+			canvasize = size;
+								(obj.GetComponent <t1Update> ()).Update1 ();
+							
+						Debug.Log ("resize on");
+					}
 
 				/** provide text position and size using RectTransform */
         		//RectTransform textransform = geometry.GetComponent <RectTransform> ();
@@ -144,7 +158,8 @@ public class TemperatureCanvas : MonoBehaviour
 
 		public void show (Info info)
     		{
-				//text.text = text1; //"object: " + obj + 
+				//Debug.Log ("in sgow");			
+	//text.text = text1; //"object: " + obj + 
 				//			"\n" +
 				//			"distance: " + hit.distance +
 				//			"\n" +
@@ -153,7 +168,7 @@ public class TemperatureCanvas : MonoBehaviour
 				 //4, 6.345f, 3.5f);
 			//	int width = (int) ((4.0f * canvas.pixelRect.width / 10.0f) / 10.0f);
 			//	Debug.Log ("width : " + width);
-  			//	geometry.text = String.Format (
+  			//	geometryinfo.text = String.Format (
 			//					"<mspace={0}>{0,-20}{1,7}\n\n{2,-20}{3,7:0.000}\n{4,-20}{5,7:0.000}\n{6,-20}{7,7:0.000}\n{8,-20}{9,7:0.000}</mspace>", 
 			//					geometry.fontSize * 12 / 16,
 			//					"Material :", "Steel",
@@ -161,9 +176,10 @@ public class TemperatureCanvas : MonoBehaviour
 			//					"Inner radius (m) :", info.geometry.radius_inner,
 			//					"Outer radius (m) :", info.geometry.radius_outer, 
 			//					"Wall thickness (m) :", info.geometry.wall_thick); //= Stringinfo.tube; //label + (m_frame);
+			
 				//temperaturetext.text = info.temperature;
 
-		/*		parameters.text = String.Format ("Substance {1}\n\nFlow rate, m3/s: {2,7:f}\n\nTemperature in, grad: {3,7:f}\nTemperature out, grad: {4,7:f}\nTemperature ambient, grad:{5,7:f}", 
+					/*		parameters.text = String.Format ("Substance {1}\n\nFlow rate, m3/s: {2,7:f}\n\nTemperature in, grad: {3,7:f}\nTemperature out, grad: {4,7:f}\nTemperature ambient, grad:{5,7:f}", 
 											   10,
 											   "Water",
 											   info.parameters.flow_rate, 
