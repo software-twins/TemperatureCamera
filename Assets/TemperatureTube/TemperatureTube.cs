@@ -363,10 +363,10 @@ public class TemperatureTube : MonoBehaviour
 		{
 		canvas.SendMessage ("show", 
 						    new Info (new Geometry ("Steel",  
-												   _length, _inner_radius, _outer_radius),
+												    _length, _inner_radius, _outer_radius),
 									  new Parameters ("Water", flow (), temperature (),
-													 _cells [_cells.Count - 1].substance ().temperature (),
-													 ambient ())));
+													  _cells [_cells.Count - 1].substance ().temperature (),
+													  ambient ())));
 		}
 	
 	private void OnDrawGizmos()
